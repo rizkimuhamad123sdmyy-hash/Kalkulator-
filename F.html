@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .calc { background: #16213e; border-radius: 20px; padding: 20px; width: 320px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+    #display { background: #0f3460; color: #fff; font-size: 36px; text-align: right; padding: 20px; border-radius: 10px; margin-bottom: 15px; word-break: break-all; min-height: 80px; }
+    .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    button { padding: 20px; font-size: 20px; border: none; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+    button:active { transform: scale(0.95); }
+    .num { background: #1a1a2e; color: #fff; }
+    .op { background: #e94560; color: #fff; }
+    .eq { background: #0f3460; color: #fff; grid-column: span 2; }
+    .clear { background: #e94560; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="calc">
+    <div id="display">0</div>
+    <div class="buttons">
+      <button class="clear" onclick="clearAll()">AC</button>
+      <button class="op" onclick="appendVal('%')">%</button>
+      <button class="op" onclick="deleteLast()">⌫</button>
+      <button class="op" onclick="appendVal('/')">÷</button>
+      <button class="num" onclick="appendVal('7')">7</button>
+      <button class="num" onclick="appendVal('8')">8</button>
+      <button class="num" onclick="appendVal('9')">9</button>
+      <button class="op" onclick="appendVal('*')">×</button>
+      <button class="num" onclick="appendVal('4')">4</button>
+      <button class="num" onclick="appendVal('5')">5</button>
+      <button class="num" onclick="appendVal('6')">6</button>
+      <button class="op" onclick="appendVal('-')">−</button>
+      <button class="num" onclick="appendVal('1')">1</button>
+      <button class="num" onclick="appendVal('2')">2</button>
+      <button class="num" onclick="appendVal('3')">3</button>
+      <button class="op" onclick="appendVal('+')">+</button>
+      <button class="num" onclick="appendVal('0')">0</button>
+      <button class="num" onclick="appendVal('.')">.</button>
+      <button class="eq" onclick="calculate()">=</button>
+    </div>
+  </div>
+  <script>
+    let current = '0';
+    const display = document.getElementById('display');
+    function appendVal(val) {
+      if (current === '0' && val !== '.') current = '';
+      current += val;
+      display.textContent = current;
+    }
+    function clearAll() { current = '0'; display.textContent = '0'; }
+    function deleteLast() {
+      current = current.slice(0, -1) || '0';
+      display.textContent = current;
+    }
+    function calculate() {
+      try {
+        current = String(eval(current));
+        display.textContent = current;
+      } catch { display.textContent = 'Error'; current = '0'; }
+    }
+  </script>
+</body>
+</html>
